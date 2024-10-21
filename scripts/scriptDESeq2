@@ -1,0 +1,15 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/DifferentialExpression/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/DifferentialExpression/
+#$ -cwd
+#$ -pe smp 1
+#$ -r y
+#$ -j y
+#$ -l mem_free=5G
+#$ -l h_rt=05:00:00
+
+module load CBI
+module load r
+
+Rscript scriptDESeq2.R

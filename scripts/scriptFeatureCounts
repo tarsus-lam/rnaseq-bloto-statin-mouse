@@ -1,0 +1,46 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/FeatureCounts/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/FeatureCounts/
+#$ -cwd
+#$ -pe smp 4
+#$ -r y
+#$ -j y
+#$ -l mem_free=5G
+#$ -l h_rt=5:00:00
+
+featureCounts -T 4 \
+    -a STARIndex/gencode.vM34.annotation.gtf \
+    -o "FeatureCounts/all_featureCounts_default.txt" \
+    -p --countReadPairs -s 2 \
+    BAMDuplicatesRemoved/*.bam
+
+featureCounts -T 4 \
+    -a STARIndex/gencode.vM34.annotation.gtf \
+    -o "FeatureCounts/all_featureCounts_strict.txt" \
+    -p -B -C --countReadPairs -s 2 \
+    BAMDuplicatesRemoved/*.bam
+
+featureCounts -T 4 \
+    -a STARIndex/gencode.vM34.annotation.gtf \
+    -o "FeatureCounts/all_featureCounts_default_overlap.txt" \
+    -p -O --countReadPairs -s 2 \
+    BAMDuplicatesRemoved/*.bam
+
+featureCounts -T 4 \
+    -a STARIndex/gencode.vM34.annotation.gtf \
+    -o "FeatureCounts/all_featureCounts_unique_overlap.txt" \
+    -p --countReadPairs --largestOverlap --minOverlap 20 -s 2 \
+    BAMDuplicatesRemoved/*.bam
+
+featureCounts -T 4 \
+    -a STARIndex/gencode.vM34.annotation.gtf \
+    -o "FeatureCounts/all_featureCounts_multimapped_strict.txt" \
+    -p -B -C --countReadPairs -s 2 -M --fraction --primary \
+    BAMDuplicatesRemoved/*.bam
+
+featureCounts -T 4 \
+    -a STARIndex/gencode.vM34.annotation.gtf \
+    -o "FeatureCounts/all_featureCounts_multimapped_overlap.txt" \
+    -p --countReadPairs -s 2 -M -O \
+    BAMDuplicatesRemoved/*.bam

@@ -1,0 +1,38 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARAlignmentsPass2/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARAlignmentsPass2/
+#$ -cwd
+#$ -pe smp 8
+#$ -r y
+#$ -j y
+#$ -l mem_free=50G
+#$ -l h_rt=48:00:00
+
+for file in FastqTrimmed/N*_R1_trimmed.fastq.gz; do
+        base=$(basename "$file" _R1_trimmed.fastq.gz)
+        STAR --runMode alignReads \
+             --runThreadN 8 \
+             --genomeDir /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARIndex \
+             --readFilesIn $file FastqTrimmed/"$base"_R2_trimmed.fastq.gz \
+             --readFilesCommand zcat \
+             --outFileNamePrefix /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARAlignmentsPass2/"$base"_ \
+             --outFilterMultimapNmax 20 \
+             --outMultimapperOrder Random \
+             --outWigType bedGraph \
+             --outSJfilterReads Unique \
+             --alignSJoverhangMin 8 \
+             --alignSJDBoverhangMin 1 \
+             --outFilterMismatchNmax 999 \
+             --outFilterMismatchNoverLmax 0.04 \
+             --alignIntronMin 20 \
+             --alignIntronMax 1000000 \
+             --alignMatesGapMax 1000000 \
+             --outSAMunmapped Within \
+             --outFilterType BySJout \
+             --outSAMattributes NH HI AS NM MD \
+             --outSAMtype BAM SortedByCoordinate \
+             --sjdbScore 1 \
+             --limitBAMsortRAM 8000000000 \
+	     --sjdbFileChrStartEnd STARAlignmentsPass1/*_SJ.out.tab
+done

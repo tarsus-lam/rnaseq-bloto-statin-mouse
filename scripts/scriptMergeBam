@@ -1,0 +1,20 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/MergedBam/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/MergedBam/
+#$ -cwd
+#$ -pe smp 4
+#$ -r y
+#$ -j y
+#$ -l mem_free=10G
+#$ -l h_rt=5:00:00
+
+samtools merge -X -@ 4 -o MergedBam/bloto_control_merged.bam BAMDuplicatesRemoved/N{13,25,3,15,21,27,33}_*_marked_sorted.bam
+
+samtools merge -X -@ 4 -o MergedBam/wild_control_merged.bam BAMDuplicatesRemoved/N{2,14,26,4,16,22,28,34}_*_marked_sorted.bam
+
+samtools merge -X -@ 4 -o MergedBam/bloto_statin_merged.bam BAMDuplicatesRemoved/N{5,9,17,23,29,7,11,19,31,35}_*_marked_sorted.bam
+
+samtools merge -X -@ 4 -o MergedBam/bloto_control_merged.bam BAMDuplicatesRemoved/N{6,10,18,24,30,8,12,20,32,36}_*_marked_sorted.bam
+
+samtools index -M MergedBam/*.bam 

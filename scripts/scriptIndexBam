@@ -1,0 +1,12 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARAlignmentsPass2/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARAlignmentsPass2/
+#$ -cwd
+#$ -pe smp 2
+#$ -r y
+#$ -j y
+#$ -l mem_free=2G
+#$ -l h_rt=02:00:00
+
+samtools index -M STARAlignmentsPass2/*.bam

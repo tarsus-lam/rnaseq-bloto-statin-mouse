@@ -1,0 +1,12 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARIndex/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARIndex/
+#$ -cwd
+#$ -pe smp 4
+#$ -r y
+#$ -j y
+#$ -l mem_free=10G
+#$ -l h_rt=5:00:00
+
+STAR --runMode genomeGenerate --genomeDir /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARIndex --genomeFastaFiles /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARIndex/GRCm39.primary_assembly.genome.fa --sjdbGTFfile /home/tarsuslam/BlotoMouseRNAseqStatinArm/STARIndex/gencode.vM34.annotation.gtf --runThreadN 4

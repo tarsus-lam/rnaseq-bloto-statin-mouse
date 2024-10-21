@@ -1,0 +1,26 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/BAMDuplicatesRemoved/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/BAMDuplicatesRemoved/
+#$ -cwd
+#$ -pe smp 2
+#$ -r y
+#$ -j y
+#$ -l mem_free=5G
+#$ -l h_rt=12:00:00
+
+export JAVA_HOME="/home/tarsuslam/jdk-21.0.2"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PICARD_PATH="/home/tarsuslam/bin"
+
+for file in STARAlignmentsPass2/N6_*.bam; do
+    base=$(basename "$file" | sed 's/_Aligned.sortedByCoord.out.bam$//')
+    java -Xmx5g -jar $PICARD_PATH/picard.jar MarkDuplicates \
+        INPUT="$file" \
+        OUTPUT="BAMDuplicatesRemoved/${base}_marked_sorted.bam" \
+        METRICS_FILE="BAMDuplicatesRemoved/${base}_marked_metrics.txt" \
+        ASSUME_SORTED=true \
+        REMOVE_DUPLICATES=true
+
+    samtools index BAMDuplicatesRemoved/${base}_marked_sorted.bam
+done

@@ -1,0 +1,16 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/AlignmentStats/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/AlignmentStats/
+#$ -cwd
+#$ -pe smp 4
+#$ -r y
+#$ -j y
+#$ -l mem_free=10G
+#$ -l h_rt=10:00:00
+
+plotCoverage -b MergedBam/*.bam \
+             -o AlignmentStats/read_coverage.png \
+	     --outRawCounts read_coverage.tab \
+	     --plotTitle "Read Coverage Across Base Pairs" \
+	     --smartLabels -p max

@@ -1,0 +1,14 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/FastQC/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/FastQC/
+#$ -cwd
+#$ -pe smp 6
+#$ -r y
+#$ -j y
+#$ -l mem_free=2G
+#$ -l h_rt=05:00:00
+
+export PATH="$PATH:/home/tarsuslam/BlotoMouseRNAseqStatinArm/FastQC-0.12.1"
+
+fastqc -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/FastQC -t 6 N*_L004_R*_001.fastq.gz

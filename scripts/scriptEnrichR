@@ -1,0 +1,15 @@
+#!/bin/env bash
+#$ -S /bin/bash
+#$ -o /home/tarsuslam/BlotoMouseRNAseqStatinArm/FunctionalEnrichment/
+#$ -e /home/tarsuslam/BlotoMouseRNAseqStatinArm/FunctionalEnrichment/
+#$ -cwd
+#$ -pe smp 1
+#$ -r y
+#$ -j y
+#$ -l mem_free=5G
+#$ -l h_rt=01:00:00
+
+module load CBI
+module load r
+
+Rscript scriptEnrichR.R
